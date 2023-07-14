@@ -9,7 +9,7 @@ output "token" {
 }
 
 output "cname" {
-  value       = cloudflare_tunnel.this.tunnel_token
+  value       = cloudflare_tunnel.this.cname
   description = "The CNAME record to access this tunnel"
 }
 
