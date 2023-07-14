@@ -39,6 +39,11 @@ resource "cloudflare_tunnel_config" "this" {
       }
     }
   }
+
+  # Destroy tunnel to ensure no active connection
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 ################################################################################
