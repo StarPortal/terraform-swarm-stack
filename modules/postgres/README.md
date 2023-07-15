@@ -1,4 +1,4 @@
-Postgres Module
+PostgreSQL Module
 ===
 
 Deploy a single instance PostgreSQL service
