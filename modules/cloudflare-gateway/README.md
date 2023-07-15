@@ -44,3 +44,7 @@ resource "docker_service" "myapp_api" {
   }
 }
 ```
+
+## Known Issues
+
+Cloudflare will prevent destroying the config if any active connection exists but the `cloudflared` service must wait for a short time to clear the tunnel. It will cause destroy fail but re-run `terraform destroy` will work correctly.

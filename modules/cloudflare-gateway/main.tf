@@ -39,11 +39,6 @@ resource "cloudflare_tunnel_config" "this" {
       }
     }
   }
-
-  # Destroy tunnel to ensure no active connection
-  lifecycle {
-    create_before_destroy = true
-  }
 }
 
 ################################################################################
@@ -92,4 +87,13 @@ resource "docker_service" "this" {
     parallelism = 1
     order       = "start-first"
   }
+
+  lifecycle {
+    create_before_destroy = true
+  }
+
+  depends_on = [
+    cloudflare_tunnel.this,
+    cloudflare_tunnel_config.this
+  ]
 }
