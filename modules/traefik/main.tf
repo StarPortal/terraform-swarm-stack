@@ -30,8 +30,6 @@ resource "docker_config" "this" {
 resource "docker_service" "this" {
   name = var.name
 
-  converge_config {}
-
   task_spec {
     container_spec {
       image = "traefik:${var.traefik_version}"
