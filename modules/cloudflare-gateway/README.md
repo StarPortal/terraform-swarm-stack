@@ -37,7 +37,7 @@ resource "docker_service" "myapp_api" {
 
   task_spec {
     networks_advanced {
-      name = ingress.netowrk_id # Attach ingress network that tunnel can reach it
+      name = module.ingress.netowrk_id # Attach ingress network that tunnel can reach it
     }
 
     # ....
