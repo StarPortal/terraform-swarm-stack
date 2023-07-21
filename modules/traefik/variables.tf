@@ -10,7 +10,7 @@ variable "name" {
 
 variable "traefik_version" {
   type        = string
-  description = "The image tag of mysql to specify version"
+  description = "The image tag of traefik to specify version"
   default     = "v2.10"
 }
 
