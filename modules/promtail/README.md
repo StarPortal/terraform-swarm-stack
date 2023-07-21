@@ -7,7 +7,7 @@ Run Promtail agent to send docker logs to Loki.
 
 ```hcl
 # Prepare an ingress
-module "ingress" {
+module "promtail" {
   source = "github.com/StarPortal/terraform-swarm-stack//modules/promtail"
 
   name = "promtail"
