@@ -44,11 +44,23 @@ resource "docker_service" "this" {
         var.insecure_api == true ? "--api.insecure=true" : null,
       ]))
 
+      env = var.environments
+
       mounts {
         target    = "/var/run/docker.sock"
         source    = "/var/run/docker.sock"
         type      = "bind"
         read_only = true
+      }
+
+      dynamic "secrets" {
+        for_each = var.secrets
+
+        content {
+          secret_id   = secrets.value.id
+          secret_name = secrets.value.name
+          file_name   = secrets.value.file_name
+        }
       }
 
       dynamic "configs" {

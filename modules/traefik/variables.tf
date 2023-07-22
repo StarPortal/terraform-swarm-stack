@@ -64,3 +64,19 @@ variable "ports" {
   description = "The ports to expose to host"
   default     = []
 }
+
+variable "environments" {
+  type        = map(any)
+  description = "The environment variable attach to traefik"
+  default     = {}
+}
+
+variable "secrets" {
+  type = list(object({
+    id        = string,
+    name      = string,
+    file_name = string,
+  }))
+  description = "The extra secrets attach to traefik"
+  default     = []
+}
