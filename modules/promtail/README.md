@@ -11,7 +11,7 @@ module "promtail" {
   source = "github.com/StarPortal/terraform-swarm-stack//modules/promtail"
 
   name = "promtail"
-  config = templatefile("${path.cwd}/promtail.yml", {})
+  config = templatefile("${path.root}/promtail.yml", {})
 }
 ```
 

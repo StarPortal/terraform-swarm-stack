@@ -38,7 +38,7 @@ module "router" {
     "--entrypoints.http.forwardedHeaders.insecure=true" # accept Cloudflare http `X-Forwarded-` headers
   ]
   # Use static config instead command arguments
-  # config = templatefile("${path.cwd}/traefik.toml", {})
+  # config = templatefile("${path.root}/traefik.toml", {})
 
   # remove before gateway destory
   depends_on = [module.ingress]
