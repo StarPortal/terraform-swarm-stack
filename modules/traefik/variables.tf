@@ -36,6 +36,12 @@ variable "config" {
   default     = null
 }
 
+variable "dynamic_configs" {
+  type = map(string)
+  description = "The dynamic config files for traefik"
+  default     = {}
+}
+
 variable "args" {
   type        = list(string)
   description = "The argument config for traefik"

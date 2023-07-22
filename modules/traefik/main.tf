@@ -27,6 +27,18 @@ resource "docker_config" "this" {
   }
 }
 
+resource "docker_config" "dynamic" {
+  for_each = var.dynamic_configs
+
+  name = "${var.name}_config__${each.key}-${replace(timestamp(), ":", ".")}"
+  data = base64encode(each.value)
+
+  lifecycle {
+    ignore_changes        = [name]
+    create_before_destroy = true
+  }
+}
+
 resource "docker_service" "this" {
   name = var.name
 
@@ -39,6 +51,7 @@ resource "docker_service" "this" {
         "--providers.docker.exposedbydefault=${var.auto_expose}",
         "--providers.docker.swarmmode",
         "--providers.docker.network=${var.network}",
+        "--providers.file.directory=/etc/traefik/dynamic",
         "--log",
         var.args,
         var.insecure_api == true ? "--api.insecure=true" : null,
@@ -70,6 +83,16 @@ resource "docker_service" "this" {
           config_id   = docker_config.this[0].id
           config_name = docker_config.this[0].name
           file_name   = "/etc/traefik/traefik.toml"
+        }
+      }
+
+      dynamic "configs" {
+        for_each = docker_config.dynamic
+
+        content {
+          config_id   = configs.value.id
+          config_name = configs.value.name
+          file_name   = "/etc/traefik/dynamic/${configs.key}.toml"
         }
       }
     }
