@@ -11,6 +11,13 @@ terraform {
 # Router
 ################################################################################
 
+locals {
+  certificate = {
+    source = var.certificate.driver == null ? var.certificate.source : null
+    type   = var.certificate.driver == null ? (var.certificate.source == null ? "volume" : var.certificate.type) : "volume"
+  }
+}
+
 data "docker_network" "this" {
   name = var.network
 }
@@ -64,6 +71,19 @@ resource "docker_service" "this" {
         source    = "/var/run/docker.sock"
         type      = "bind"
         read_only = true
+      }
+
+      mounts {
+        target = "/etc/certificates"
+        source = local.certificate.source
+        type   = local.certificate.type
+
+        dynamic "volume_options" {
+          for_each = var.certificate.driver == null ? [] : [1]
+          content {
+            driver_options = var.certificate.driver
+          }
+        }
       }
 
       dynamic "secrets" {

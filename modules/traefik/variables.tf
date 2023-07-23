@@ -37,7 +37,7 @@ variable "config" {
 }
 
 variable "dynamic_configs" {
-  type = map(string)
+  type        = map(string)
   description = "The dynamic config files for traefik"
   default     = {}
 }
@@ -58,6 +58,16 @@ variable "insecure_api" {
   type        = bool
   description = "Enable 8080 port for API and Dashboard"
   default     = false
+}
+
+variable "certificate" {
+  type = object({
+    driver = optional(map(any)),
+    source = optional(string)
+    type   = optional(string, "bind")
+  })
+  description = "The dynamic config files for traefik"
+  default     = {}
 }
 
 variable "ports" {
