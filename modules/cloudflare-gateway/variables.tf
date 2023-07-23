@@ -32,7 +32,11 @@ variable "description" {
 variable "ingress" {
   type = list(object({
     hostname = optional(string)
-    service  = string
+    path     = optional(string)
+    origin_request = optional(object({
+      no_tls_verify = optional(bool, false)
+    }))
+    service = string
   }))
   description = "The ingress rules"
 }

@@ -34,8 +34,17 @@ resource "cloudflare_tunnel_config" "this" {
     dynamic "ingress_rule" {
       for_each = var.ingress
       content {
+        path     = ingress_rule.value.path
         hostname = ingress_rule.value.hostname
         service  = ingress_rule.value.service
+
+        dynamic "origin_request" {
+          for_each = ingress_rule.value.origin_request == null ? [] : [ingress_rule.value.origin_request]
+
+          content {
+            no_tls_verify = origin_request.value.no_tls_verify
+          }
+        }
       }
     }
   }
