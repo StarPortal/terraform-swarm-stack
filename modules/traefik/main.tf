@@ -66,6 +66,15 @@ resource "docker_service" "this" {
 
       env = var.environments
 
+      dynamic "labels" {
+        for_each = var.namespace == null ? [] : [1]
+
+        content {
+          label = "com.docker.stack.namespace"
+          value = var.namespace
+        }
+      }
+
       mounts {
         target    = "/var/run/docker.sock"
         source    = "/var/run/docker.sock"
