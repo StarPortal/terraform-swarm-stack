@@ -164,12 +164,12 @@ resource "docker_service" "this" {
   update_config {
     parallelism    = 2
     failure_action = "pause"
-    order          = "start-first"
+    order          = length(var.ports) > 0 ? "stop-first" : "start-first"
   }
 
   rollback_config {
     parallelism    = 2
     failure_action = "pause"
-    order          = "start-first"
+    order          = length(var.ports) > 0 ? "stop-first" : "start-first"
   }
 }
