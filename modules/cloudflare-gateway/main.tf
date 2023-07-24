@@ -55,7 +55,7 @@ resource "cloudflare_tunnel_config" "this" {
 ################################################################################
 
 resource "docker_network" "this" {
-  name   = "${var.name}_ingress"
+  name   = "${var.name}_net"
   driver = "overlay"
 }
 
