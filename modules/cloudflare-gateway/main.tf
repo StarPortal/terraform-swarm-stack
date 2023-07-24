@@ -111,6 +111,7 @@ resource "docker_service" "this" {
   }
 
   depends_on = [
+    docker_network.this,
     cloudflare_tunnel.this,
     cloudflare_tunnel_config.this
   ]
