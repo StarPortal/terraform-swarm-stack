@@ -60,7 +60,7 @@ resource "docker_network" "this" {
 }
 
 resource "docker_service" "this" {
-  name = "${var.name}_ingress"
+  name = join("_", compact([var.namespace, "${var.name}_agent"]))
 
   dynamic "labels" {
     for_each = var.namespace == null ? [] : [1]
