@@ -68,7 +68,7 @@ resource "docker_service" "this" {
       for_each = var.networks
 
       content {
-        name = data.docker_network.this.id
+        name = networks_advanced.value
       }
     }
 

@@ -8,6 +8,12 @@ variable "name" {
   nullable    = false
 }
 
+variable "namespace" {
+  type        = string
+  description = "The namespace of Docker Swarm"
+  default     = null
+}
+
 variable "postgres_version" {
   type        = string
   description = "The image tag of postgres to specify version"
@@ -35,6 +41,12 @@ variable "driver_options" {
 variable "constraints" {
   type        = list(string)
   description = "The container placement constraints"
+  default     = []
+}
+
+variable "networks" {
+  type        = list(string)
+  description = "The networks attached"
   default     = []
 }
 

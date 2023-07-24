@@ -18,14 +18,32 @@ locals {
 }
 
 resource "docker_secret" "password" {
-  name = "${var.name}_password"
+  name = join("_", compact([var.namespace, "${var.name}_password"]))
   data = base64encode(var.password)
+
+  dynamic "labels" {
+    for_each = var.namespace == null ? [] : [1]
+
+    content {
+      label = "com.docker.stack.namespace"
+      value = var.namespace
+    }
+  }
 }
 
 resource "docker_service" "this" {
-  name = var.name
+  name = join("_", compact([var.namespace, var.name]))
 
   converge_config {}
+
+  dynamic "labels" {
+    for_each = var.namespace == null ? [] : [1]
+
+    content {
+      label = "com.docker.stack.namespace"
+      value = var.namespace
+    }
+  }
 
   task_spec {
     container_spec {
@@ -54,6 +72,14 @@ resource "docker_service" "this" {
         secret_id   = docker_secret.password.id
         secret_name = docker_secret.password.name
         file_name   = local.password_file
+      }
+    }
+
+    dynamic "networks_advanced" {
+      for_each = var.networks
+
+      content {
+        name = networks_advanced.value
       }
     }
 
