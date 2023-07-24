@@ -62,6 +62,15 @@ resource "docker_network" "this" {
 resource "docker_service" "this" {
   name = "${var.name}_ingress"
 
+  dynamic "labels" {
+    for_each = var.namespace == null ? [] : [1]
+
+    content {
+      label = "com.docker.stack.namespace"
+      value = var.namespace
+    }
+  }
+
   task_spec {
     container_spec {
       image = "cloudflare/cloudflared:${var.agent_version}"
