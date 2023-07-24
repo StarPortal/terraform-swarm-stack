@@ -24,7 +24,16 @@ resource "docker_config" "this" {
 }
 
 resource "docker_service" "this" {
-  name = var.name
+  name = join("_", compact([var.namespace, var.name]))
+
+  dynamic "labels" {
+    for_each = var.namespace == null ? [] : [1]
+
+    content {
+      label = "com.docker.stack.namespace"
+      value = var.namespace
+    }
+  }
 
   task_spec {
     container_spec {
