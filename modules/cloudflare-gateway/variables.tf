@@ -8,6 +8,12 @@ variable "name" {
   nullable    = false
 }
 
+variable "namespace" {
+  type        = string
+  description = "The docker swarm namespace"
+  default     = null
+}
+
 ################################################################################
 # Cloudflare Tunnel
 ################################################################################

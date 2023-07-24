@@ -57,6 +57,15 @@ resource "cloudflare_tunnel_config" "this" {
 resource "docker_network" "this" {
   name   = "${var.name}_ingress"
   driver = "overlay"
+
+  dynamic "labels" {
+    for_each = var.namespace == null ? [] : [1]
+
+    content {
+      label = "com.docker.stack.namespace"
+      value = var.namespace
+    }
+  }
 }
 
 resource "docker_service" "this" {
@@ -66,6 +75,15 @@ resource "docker_service" "this" {
     container_spec {
       image = "cloudflare/cloudflared:${var.agent_version}"
       args  = ["tunnel", "--no-autoupdate", "run"]
+
+      dynamic "labels" {
+        for_each = var.namespace == null ? [] : [1]
+
+        content {
+          label = "com.docker.stack.namespace"
+          value = var.namespace
+        }
+      }
 
       env = {
         TUNNEL_TOKEN = cloudflare_tunnel.this.tunnel_token
