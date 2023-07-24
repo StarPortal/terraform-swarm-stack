@@ -67,15 +67,6 @@ resource "docker_service" "this" {
       image = "cloudflare/cloudflared:${var.agent_version}"
       args  = ["tunnel", "--no-autoupdate", "run"]
 
-      dynamic "labels" {
-        for_each = var.namespace == null ? [] : [1]
-
-        content {
-          label = "com.docker.stack.namespace"
-          value = var.namespace
-        }
-      }
-
       env = {
         TUNNEL_TOKEN = cloudflare_tunnel.this.tunnel_token
       }
