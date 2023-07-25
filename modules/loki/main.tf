@@ -69,10 +69,6 @@ resource "docker_service" "this" {
     }
   }
 
-  mode {
-    global = true
-  }
-
   update_config {
     delay       = "30s"
     parallelism = 1
