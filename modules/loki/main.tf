@@ -65,7 +65,8 @@ resource "docker_service" "this" {
       for_each = var.networks
 
       content {
-        name = networks_advanced.value
+        name    = networks_advanced.value
+        aliases = ["loki"]
       }
     }
 
