@@ -77,6 +77,20 @@ resource "docker_service" "this" {
     }
   }
 
+  endpoint_spec {
+    ports {
+      target_port = 3100
+    }
+
+    ports {
+      target_port = 7946
+    }
+
+    ports {
+      target_port = 9095
+    }
+  }
+
   mode {
     replicated {
       replicas = var.replicas
