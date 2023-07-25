@@ -69,6 +69,12 @@ resource "docker_service" "this" {
     }
   }
 
+  mode {
+    replicated {
+      replicas = 1
+    }
+  }
+
   update_config {
     delay       = "30s"
     parallelism = 1
