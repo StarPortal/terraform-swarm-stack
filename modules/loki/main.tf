@@ -8,7 +8,7 @@ terraform {
 }
 
 ################################################################################
-# Promtail Agent
+# Loki Server
 ################################################################################
 
 resource "docker_config" "this" {
@@ -37,21 +37,7 @@ resource "docker_service" "this" {
 
   task_spec {
     container_spec {
-      image = "grafana/promtail:${var.agent_version}"
-
-      mounts {
-        target    = "/var/run/docker.sock"
-        source    = "/var/run/docker.sock"
-        type      = "bind"
-        read_only = true
-      }
-
-      mounts {
-        target    = "/var/lib/docker/containers"
-        source    = "/var/lib/docker/containers"
-        type      = "bind"
-        read_only = true
-      }
+      image = "grafana/loki:${var.loki_version}"
 
       dynamic "configs" {
         for_each = var.config == null ? [] : [1]
@@ -59,7 +45,7 @@ resource "docker_service" "this" {
         content {
           config_id   = docker_config.this[0].id
           config_name = docker_config.this[0].name
-          file_name   = "/etc/promtail/config.yml"
+          file_name   = "/etc/loki/local-config.yaml"
         }
       }
     }

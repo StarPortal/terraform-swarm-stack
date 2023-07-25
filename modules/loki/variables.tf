@@ -4,7 +4,7 @@
 
 variable "name" {
   type        = string
-  description = "The promtail service name"
+  description = "The loki service name"
   nullable    = false
 }
 
@@ -14,9 +14,9 @@ variable "namespace" {
   default     = null
 }
 
-variable "agent_version" {
+variable "loki_version" {
   type        = string
-  description = "The image tag of Promtail to specify version"
+  description = "The image tag of Loki to specify version"
   default     = "latest"
 }
 
