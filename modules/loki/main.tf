@@ -39,13 +39,17 @@ resource "docker_service" "this" {
     container_spec {
       image = "grafana/loki:${var.loki_version}"
 
+      args = [
+        "-config.file=/etc/loki/config.yaml"
+      ]
+
       dynamic "configs" {
         for_each = var.config == null ? [] : [1]
 
         content {
           config_id   = docker_config.this[0].id
           config_name = docker_config.this[0].name
-          file_name   = "/etc/loki/local-config.yaml"
+          file_name   = "/etc/loki/config.yaml"
         }
       }
     }
