@@ -52,6 +52,13 @@ resource "docker_service" "this" {
           file_name   = "/etc/loki/config.yaml"
         }
       }
+
+      healthcheck {
+        test     = ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:3100/ready || exit 1"]
+        interval = "10s"
+        timeout  = "5s"
+        retries  = 5
+      }
     }
 
     dynamic "networks_advanced" {
