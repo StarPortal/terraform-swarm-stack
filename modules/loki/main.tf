@@ -43,6 +43,15 @@ resource "docker_service" "this" {
         "-config.file=/etc/loki/config.yaml"
       ]
 
+      dynamic "labels" {
+        for_each = var.namespace == null ? [] : [1]
+
+        content {
+          label = "com.docker.stack.namespace"
+          value = var.namespace
+        }
+      }
+
       dynamic "configs" {
         for_each = var.config == null ? [] : [1]
 

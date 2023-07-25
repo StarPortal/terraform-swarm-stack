@@ -74,6 +74,15 @@ resource "docker_service" "this" {
       env = {
         TUNNEL_TOKEN = cloudflare_tunnel.this.tunnel_token
       }
+
+      dynamic "labels" {
+        for_each = var.namespace == null ? [] : [1]
+
+        content {
+          label = "com.docker.stack.namespace"
+          value = var.namespace
+        }
+      }
     }
 
     dynamic "networks_advanced" {

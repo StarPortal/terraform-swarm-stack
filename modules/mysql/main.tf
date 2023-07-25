@@ -53,6 +53,15 @@ resource "docker_service" "this" {
         MYSQL_PASSWORD_FILE      = var.password == null ? null : local.password_file
       }
 
+      dynamic "labels" {
+        for_each = var.namespace == null ? [] : [1]
+
+        content {
+          label = "com.docker.stack.namespace"
+          value = var.namespace
+        }
+      }
+
       mounts {
         target = "/var/lib/mysql"
         source = local.mount_source

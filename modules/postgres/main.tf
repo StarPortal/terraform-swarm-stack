@@ -55,6 +55,15 @@ resource "docker_service" "this" {
         POSTGRES_DB            = var.database
       }
 
+      dynamic "labels" {
+        for_each = var.namespace == null ? [] : [1]
+
+        content {
+          label = "com.docker.stack.namespace"
+          value = var.namespace
+        }
+      }
+
       mounts {
         target = "/var/lib/postgresql/data"
         source = local.mount_source
