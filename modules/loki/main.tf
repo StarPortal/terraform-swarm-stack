@@ -79,7 +79,7 @@ resource "docker_service" "this" {
 
   mode {
     replicated {
-      replicas = 1
+      replicas = var.replicas
     }
   }
 
