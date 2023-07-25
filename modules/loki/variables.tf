@@ -20,12 +20,6 @@ variable "loki_version" {
   default     = "latest"
 }
 
-variable "replicas" {
-  type        = number
-  description = "The replicate of Loki"
-  default     = 1
-}
-
 variable "networks" {
   type        = list(string)
   description = "The networks attached"
