@@ -54,11 +54,6 @@ resource "cloudflare_tunnel_config" "this" {
 # Gateway
 ################################################################################
 
-resource "docker_network" "this" {
-  name   = "${var.name}_net"
-  driver = "overlay"
-}
-
 resource "docker_service" "this" {
   name = join("_", compact([var.namespace, "${var.name}_agent"]))
 
@@ -81,8 +76,12 @@ resource "docker_service" "this" {
       }
     }
 
-    networks_advanced {
-      name = docker_network.this.id
+    dynamic "networks_advanced" {
+      for_each = var.networks
+
+      content {
+        name = networks_advanced.value
+      }
     }
 
     placement {
@@ -111,7 +110,6 @@ resource "docker_service" "this" {
   }
 
   depends_on = [
-    docker_network.this,
     cloudflare_tunnel.this,
     cloudflare_tunnel_config.this
   ]

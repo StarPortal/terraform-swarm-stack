@@ -6,12 +6,18 @@ Create a CloudFlare Tunnel as Docker Swarm Geteway
 ## Usage
 
 ```hcl
+# Define network
+resource "docker_network" "ingress" {
+    name = "ingress"
+}
+
 # Define gateway
 module "ingress" {
   source = "github.com/StarPortal/terraform-swarm-stack//modules/cloudflare-gateway"
 
   account_id  = var.cf_account_id
   name        = "cloudflare"
+  networks    = [docker_network.ingress.id]
   description = "ingress@swarm.example.com"
 
   agent_version = "2023.7.0"

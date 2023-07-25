@@ -14,6 +14,17 @@ variable "namespace" {
   default     = null
 }
 
+variable "networks" {
+  type        = list(string)
+  description = "The networks attached"
+  nullable    = false
+
+  validation {
+    condition     = length(var.networks) > 0
+    error_message = "Require at least one network to attach"
+  }
+}
+
 ################################################################################
 # Cloudflare Tunnel
 ################################################################################
