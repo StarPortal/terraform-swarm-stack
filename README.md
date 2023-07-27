@@ -15,6 +15,8 @@ The Terraform modules for Docker Swarm.
 | [postgres](/modules/postgres)                     | A pre-configured single node PostgreSQL server                            |
 | [mysql](/modules/mysql)                           | A pre-configures single node MySQL server                                 |
 | [promtail](/modules/promtail)                     | A pre-configures promtail to capture docker logs to Loki                  |
+| [loki](/modules/loki)                             | Log aggregate service                                                     |
+| [grafana](/modules/grafana)                       | The analytics & monitoring dashboard                                      |
 
 > To setup an infrastructure, usually use `cloudflare-gateway` and `traefik` as base components.
 
@@ -25,5 +27,3 @@ The Terraform modules for Docker Swarm.
 | service  | A service template to expose to traefik |
 | swarmpit | A lightweight Docker Swarm dashboard    |
 | vault    | The HashiCorp vault cluster             |
-| loki     | Log aggregate service                   |
-| grafana  | The dashboard                           |
