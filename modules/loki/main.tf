@@ -79,6 +79,10 @@ resource "docker_service" "this" {
       }
     }
 
+    placement {
+      constraints = var.constraints
+    }
+
     restart_policy {
       condition = "any"
       delay     = "5s"

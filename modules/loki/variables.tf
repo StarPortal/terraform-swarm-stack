@@ -20,6 +20,12 @@ variable "loki_version" {
   default     = "latest"
 }
 
+variable "constraints" {
+  type        = list(string)
+  description = "The container placement constraints"
+  default     = []
+}
+
 variable "networks" {
   type        = list(string)
   description = "The networks attached"
