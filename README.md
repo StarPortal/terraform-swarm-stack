@@ -26,4 +26,5 @@ The Terraform modules for Docker Swarm.
 |----------|-----------------------------------------|
 | service  | A service template to expose to traefik |
 | swarmpit | A lightweight Docker Swarm dashboard    |
+| scylladb | The fast & scalable NoSQL               |
 | vault    | The HashiCorp vault cluster             |
