@@ -89,6 +89,26 @@ resource "docker_service" "this" {
       constraints = var.constraints
     }
 
+    resources {
+      dynamic "limits" {
+        for_each = var.limit == null ? [] : [var.limit]
+
+        content {
+          nano_cpus    = limits.value.cores == null ? null : limits.value.cores * 1e9 * 1024
+          memory_bytes = limits.value.memory == null ? null : limits.value.memory * 1024 * 1024
+        }
+      }
+
+      dynamic "reservation" {
+        for_each = var.reservation == null ? [] : [var.reservation]
+
+        content {
+          nano_cpus    = reservation.value.cores == null ? null : reservation.value.cores * 1e9 * 1024
+          memory_bytes = reservation.value.memory == null ? null : reservation.value.memory * 1024 * 1024
+        }
+      }
+    }
+
     restart_policy {
       condition = "any"
       delay     = "5s"
