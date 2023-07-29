@@ -32,6 +32,24 @@ variable "network" {
   nullable    = false
 }
 
+variable "limit" {
+  type = object({
+    cores  = optional(number)
+    memory = optional(number)
+  })
+  description = "The resources limit of service, memory unit is MB"
+  default     = null
+}
+
+variable "reservation" {
+  type = object({
+    cores  = optional(number)
+    memory = optional(number)
+  })
+  description = "The resource reservation of service, memory unit is MB"
+  default     = null
+}
+
 ################################################################################
 # Traefik
 ################################################################################
