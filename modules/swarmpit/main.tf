@@ -70,7 +70,7 @@ resource "docker_service" "db" {
     }
 
     networks_advanced {
-      name = docker_network.this.name
+      name = docker_network.this.id
     }
 
     placement {
@@ -160,7 +160,7 @@ resource "docker_service" "influxdb" {
     }
 
     networks_advanced {
-      name = docker_network.this.name
+      name = docker_network.this.id
     }
 
     placement {
@@ -249,7 +249,7 @@ resource "docker_service" "this" {
     }
 
     networks_advanced {
-      name = docker_network.this.name
+      name = docker_network.this.id
     }
 
     dynamic "networks_advanced" {
@@ -343,7 +343,7 @@ resource "docker_service" "agent" {
     }
 
     networks_advanced {
-      name = docker_network.this.name
+      name = docker_network.this.id
     }
 
     resources {
