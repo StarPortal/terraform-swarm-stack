@@ -211,7 +211,7 @@ resource "docker_service" "influxdb" {
 ################################################################################
 
 resource "docker_service" "this" {
-  name = "${local.name}_swarmpit"
+  name = "${local.name}_app"
 
   dynamic "labels" {
     for_each = var.namespace == null ? [] : [1]
@@ -322,7 +322,9 @@ resource "docker_service" "agent" {
       image = "swarmpit/agent:${var.agent_version}"
 
       env = {
-        DOCKER_API_VERSION = var.docker_api_version
+        DOCKER_API_VERSION    = var.docker_api_version
+        EVENT_ENDPOINT        = "http://${docker_service.this.name}:8080/events"
+        HEALTH_CHECK_ENDPOINT = "http://${docker_service.this.name}:8080/version"
       }
 
       dynamic "labels" {
