@@ -134,10 +134,6 @@ resource "docker_service" "this" {
     order       = "start-first"
   }
 
-  lifecycle {
-    create_before_destroy = true
-  }
-
   depends_on = [
     cloudflare_tunnel.this,
     cloudflare_tunnel_config.this
