@@ -129,6 +129,12 @@ variable "swarmpit_version" {
   default     = "latest"
 }
 
+variable "agent_version" {
+  type        = string
+  description = "The image tag of swarmpit agent to specify version"
+  default     = "latest"
+}
+
 variable "constraints" {
   type        = list(string)
   description = "The container placement constraints"

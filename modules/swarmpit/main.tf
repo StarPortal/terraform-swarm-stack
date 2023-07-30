@@ -319,7 +319,7 @@ resource "docker_service" "agent" {
 
   task_spec {
     container_spec {
-      image = "swarmpit/agent:${var.swarmpit_version}"
+      image = "swarmpit/agent:${var.agent_version}"
 
       env = {
         DOCKER_API_VERSION = var.docker_api_version
