@@ -73,7 +73,7 @@ variable "db_reservation" {
 variable "influxdb_version" {
   type        = string
   description = "The image tag of influxdb to specify version"
-  default     = "1.9"
+  default     = "1.8"
 }
 
 variable "influxdb_constraints" {
