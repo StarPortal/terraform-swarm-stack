@@ -108,8 +108,8 @@ resource "docker_service" "this" {
         for_each = var.limit == null ? [] : [var.limit]
 
         content {
-          nano_cpus    = limits.value.cores == null ? null : limits.value.cores * 1e9 * 1024
-          memory_bytes = limits.value.memory == null ? null : limits.value.memory * 1024 * 1024
+          nano_cpus    = limits.value.cores == null ? null : limits.value.cores * 1e9
+          memory_bytes = limits.value.memory == null ? null : limits.value.memory * 1e6
         }
       }
 
@@ -117,8 +117,8 @@ resource "docker_service" "this" {
         for_each = var.reservation == null ? [] : [var.reservation]
 
         content {
-          nano_cpus    = reservation.value.cores == null ? null : reservation.value.cores * 1e9 * 1024
-          memory_bytes = reservation.value.memory == null ? null : reservation.value.memory * 1024 * 1024
+          nano_cpus    = reservation.value.cores == null ? null : reservation.value.cores * 1e9
+          memory_bytes = reservation.value.memory == null ? null : reservation.value.memory * 1e6
         }
       }
     }
